@@ -1,55 +1,42 @@
 #include "ft_printf.h"
 
-int get_num_length(int num)
+static int get_unsigned_length(unsigned int n)
 {
 	int length;
 
 	length = 0;
-	while(num > 0)
+	if(n == 0)
+		return (1);
+	while(n > 0)
 	{
-		num /= 10;
 		length++;
+		n /= 10;
 	}
-	return length;
+	return (length);
 }
 
-void insert_num(t_data *data, int num)
+static void insert_unsigned(t_data *data, unsigned int n)
 {
-	if(num > 10)
-		insert_num(data, num / 10);
-
-	check_flush_insert(data, num % 10 + '0');
+	if(n >= 10)
+		insert_unsigned(data, n / 10);
+	check_flush_insert(data, (n % 10) + '0');
 }
-
-void i_d_handler(t_data *data, ca_list *ap)
-{
-	int num;
-
-	num = va_arg(*ap, int);
-	
 
 void u_handler(t_data *data, va_list *ap)
 {
 	unsigned int num;
-	int width;
 	int num_length;
-	int precision;
+	int width;
 
 	num = va_arg(*ap, unsigned int);
+	num_length = get_unsigned_length(num);
 	width = data->width + 1;
-	precision = data->precision + 1;
-	num_length = get_num_length(num);
-	
-	if(data->precision_set == true && data->left_align == false && data->precision > 0 && data->zero_pad == true)
-		data->width_padding = '0';
-	while(data->left_align == false && data->precision > 0 && --(width) > data->precision)
+	if(data->width_padding == '0' && (data->left_align == true || data->precision_set == true))
+		data->width_padding = ' ';
+	while(data->left_align == false && (--(width) - num_length > 0))
 		check_flush_insert(data, data->width_padding);
-	if(--(precision) - num_length > num_length)
-		check_flush_insert(data, '0');
-	insert_num(data, num);
-	while(data->left_align == true && data->precision > 0 && --(width) > data->precision)
+	precision_pad(data, (long)num);
+	insert_unsigned(data, num);
+	while(data->left_align == true && (--(width) - num_length > 0))
 		check_flush_insert(data, data->width_padding);
 }
-
-
-

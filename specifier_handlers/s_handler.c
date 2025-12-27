@@ -1,32 +1,47 @@
 #include "ft_printf.h"
-void handle_precision_n_width(t_data *data, char *s_string)
+void apply_width(t_data *data, char *s_string, int s_length)
 {
 	int i;
-	int width;
 
-	i = -1;
-	width = data->width + 1;
-	while(data->left_align == true && s_string[++i] != 0 && i < data->precision)
-		check_flush_insert(data, s_string[i]);
-	while(--width > data->precision)
+	i = 0;
+	while(data->left_align == false && data->width - s_length > 0)
+	{
 		check_flush_insert(data, ' ');
-	while(data->left_align == false && s_string[++i] != '\0' && i < data->precision)
+		(data->width)--;
+	}
+	while(s_string[i] != '\0')
+	{
 		check_flush_insert(data, s_string[i]);
+		i++;
+	}
+	
+	while(data->left_align == true && data->width - s_length > 0)
+	{
+		check_flush_insert(data, ' ');
+		(data->width)--;
+	}
 }
 
-void handle_width(t_data *data, char *s_string, int s_length)
+void apply_width_precision(t_data *data, char *s_string)
 {
 	int i;
-	int width;
 
-	i = -1;
-	width = data->width + 1;
-	while(data->left_align == true && s_string[++i] != '\0')
-		check_flush_insert(data, s_string[i]);
-	while(--width - s_length > 0)
+	i = 0;
+	while(data->left_align == false && data->width - data->precision > 0)
+	{
 		check_flush_insert(data, ' ');
-	while(data->left_align == false && s_string[++i] != '\0')
+		(data->width)--;
+	}
+	while(i < data->precision)
+	{
 		check_flush_insert(data, s_string[i]);
+		i++;
+	}
+	while(data->left_align == true && data->width - data->precision > 0)
+	{
+		check_flush_insert(data, ' ');
+		(data->width)--;
+	}
 }
 
 void s_handler(t_data *data, va_list *ap)
@@ -36,20 +51,22 @@ void s_handler(t_data *data, va_list *ap)
 	int i;
 
 	s_string = va_arg(*ap, char *);
+	if(s_string == NULL)
+		s_string = "(null)";
 	s_length = ft_strlen(s_string);
 	i = -1;
 	if(data->precision >= s_length)
-		data->precision = 0;
-	else
+		data->precision_set = false;
+	else if(data->precision_set == true)
 		s_length = data->precision;
-	if(data->width <= s_length)
+	if(data->width - s_length <= 0)
 		data->width = 0;
-	while(data->precision == 0 && data->width == 0 && s_string[++i] != '\0')
+	while(data->precision_set == false && data->width == 0 && s_string[++i] != '\0')
 		check_flush_insert(data, s_string[i]);
-	if(data->precision > 0 && data->width > data->precision)
-		handle_precision_n_width(data, s_string);
-	while(data->precision == 0 && data->width > s_length)
-		handle_width(data, s_string, s_length);
-	while(data->width == 0 && data->precision > 0 && i < data->precision && s_string[++i] != '\0')
+	while(data->width == 0 && data->precision == s_length && ++i < data->precision)
 		check_flush_insert(data, s_string[i]);
+	if(data->precision_set == false && data->width - s_length > 0)
+		apply_width(data, s_string, s_length);
+	if(data->width > data->precision && data->precision == s_length)
+		apply_width_precision(data, s_string);
 }
