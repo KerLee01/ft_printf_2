@@ -28,8 +28,10 @@ static int get_num_length(t_data *data, long num)
 	return format_length + num_length;
 }
 
-static void insert_num(t_data *data, long num)
+static void insert_num(t_data *data, long num, int num_length)
 {
+	if(num_length == 0)
+		return;
 	if(num < 0)
 		num *= -1;
 	if(num >= 10)
@@ -50,17 +52,18 @@ void i_d_handler(t_data *data, va_list *ap)
 	if(data->width_padding == '0' && (data->precision_set == true || data->left_align == true))
 		data->width_padding = ' ';
 	num_length = get_num_length(data, (long)num);
+	if(data->width_padding == '0' && num < 0)
+		check_flush_insert(data, '-');
 	while(data->left_align == false && (--(width) - num_length) > 0)
 		check_flush_insert(data, data->width_padding);
-	if(num < 0)
+	if(data->width_padding == ' ' && num < 0)
 		check_flush_insert(data, '-');
 	if(data->show_sign == true && num >= 0)
 		check_flush_insert(data, '+');
 	if(data->if_positive_space == true && num >= 0)
 		check_flush_insert(data, ' ');
 	precision_pad(data, (long)num);
-	if(num_length != 0)
-		insert_num(data, (long)num);
+	insert_num(data, (long)num, num_length);
 	while(data->left_align == true && (--(width) - num_length) > 0)
 		check_flush_insert(data, data->width_padding);
 }
