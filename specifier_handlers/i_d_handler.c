@@ -23,7 +23,7 @@ static int get_num_length(t_data *data, long num)
 		num /= 10;
 		num_length++;
 	}
-	if(num_length < data->precision || num == 0)
+	if(num_length < data->precision)
 		return (format_length + data->precision);
 	return format_length + num_length;
 }
