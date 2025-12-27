@@ -16,15 +16,13 @@ static int get_num_length(t_data *data, long num)
 	}
 	else if(data->show_sign == true)
 		format_length++;
-	if(num == 0)
-		return (format_length + 1);
 	while(num > 0)
 	{
 		num /= 10;
 		num_length++;
 	}
 	if(num_length < data->precision)
-		return format_length + data->precision;
+		return (format_length + data->precision);
 	return format_length + num_length;
 }
 

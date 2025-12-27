@@ -42,8 +42,6 @@ void x_X_handler(t_data *data, va_list *ap)
 	hex = va_arg(*ap, unsigned int);
 	width = data->width + 1;
 	hex_length = get_hex_length(data, hex);
-	if(hex_length < data->precision)
-		hex_length = data->precision;
 	if(data->width_padding == '0' && (data->left_align == true || data->precision_set == true))
 		data->width_padding = ' ';
 	while(data->left_align == false && (--(width) - hex_length) > 0)

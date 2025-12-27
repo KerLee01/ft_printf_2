@@ -92,20 +92,17 @@ int main(void)
 
 	printf("*** TEST INT ***\n");
 
-	ft_printf("ft     Int: %07x\n", -54);
-	printf("pritnf Int: %07x\n", -54);
+	ft_printf("ft     Int: %8.5i\n", 0);
+	printf("pritnf Int: %8.5i\n", 0);
 
-	ft_printf("ft     Int: %8.5x\n", 34);
-	printf("pritnf Int: %8.5x\n", 34);
+	ft_printf("ft     Int: %-8.5i\n", 0);
+	printf("pritnf Int: %-8.5i\n", 0);
 
-	ft_printf("ft     Int: %10.5x\n", -216);
-	printf("printf Int: %10.5x\n", -216);
+	ft_printf("ft     Int: %08.5i\n", 0);
+	printf("printf Int: %08.5i\n", 0);
 
-	ft_printf("ft     Int: %.x\n", 0);
-	printf("pritnf Int: %.x\n", 0);
-
-	ft_printf("ft     Int: %0.x\n", 0);
-	printf("printf Int: %0.x\n", 0);
+	ft_printf("ft     Int: %03.2i\n", 0);
+	printf("pritnf Int: %03.2i\n", 0);
 
 	return 0;
 }
