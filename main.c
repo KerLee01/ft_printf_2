@@ -18,6 +18,7 @@ int main(void)
 
 	printf("----------------------------------------------------\n");
 	*/
+	/*
 	printf("*** TEST STRING ***\n");
 	ft_printf("ft= %.03s \n", NULL);
 	printf("p = %.03s \n", NULL);
@@ -34,10 +35,7 @@ int main(void)
 	ft_printf("ft= %-9.1s \n", NULL);
 	printf("p = %-9.1s \n", NULL);
 
-
-
-
-
+	*/
 
 	/*
 	ft_printf("String: %  -###+++10.5s  \n", str);
@@ -94,20 +92,20 @@ int main(void)
 
 	printf("*** TEST INT ***\n");
 
-	ft_printf("ft     Int: %07i\n", -54);
-	printf("pritnf Int: %07i\n", -54);
+	ft_printf("ft     Int: %07x\n", -54);
+	printf("pritnf Int: %07x\n", -54);
 
-	ft_printf("ft     Int: %8.5i\n", 34);
-	printf("pritnf Int: %8.5i\n", 34);
+	ft_printf("ft     Int: %8.5x\n", 34);
+	printf("pritnf Int: %8.5x\n", 34);
 
-	ft_printf("ft     Int: %10.5i\n", -216);
-	printf("printf Int: %10.5i\n", -216);
+	ft_printf("ft     Int: %10.5x\n", -216);
+	printf("printf Int: %10.5x\n", -216);
 
-	ft_printf("ft     Int: %.i\n", 0);
-	printf("pritnf Int: %.i\n", 0);
+	ft_printf("ft     Int: %.x\n", 0);
+	printf("pritnf Int: %.x\n", 0);
 
-	ft_printf("ft     Int: %0.i\n", 0);
-	printf("printf Int: %0.i\n", 0);
+	ft_printf("ft     Int: %0.x\n", 0);
+	printf("printf Int: %0.x\n", 0);
 
 	return 0;
 }
