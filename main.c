@@ -94,7 +94,7 @@ int main(void)
 
 	printf("*** TEST INT ***\n");
 
-	ft_printf("ft     Int: %7i\n", -14);
+	ft_printf("ft Int: %7i\n", -14);
 	printf("pritnf Int: %7i\n", -14);
 
 	ft_printf("ft     Int: %8.5i\n", 34);
@@ -102,6 +102,12 @@ int main(void)
 
 	ft_printf("ft     Int: %10.5i\n", -216);
 	printf("printf Int: %10.5i\n", -216);
+
+	ft_printf("ft     Int: %.i\n", 0);
+	printf("pritnf Int: %.i\n", 0);
+
+	ft_printf("ft     Int: %0.i\n", 0);
+	printf("printf Int: %0.i\n", 0);
 
 	return 0;
 }
