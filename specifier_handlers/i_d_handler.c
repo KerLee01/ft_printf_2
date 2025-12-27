@@ -1,25 +1,30 @@
-#include "ft_printf.h"
+#include "../ft_printf.h"
 
 static int get_num_length(t_data *data, long num)
 {
-	int length;
+	int format_length;
+	int num_length;
  
-	length = 0;
+	format_length = 0;
+	num_length = 0;
 	if(num < 0)
 	{
 		num *= -1;
-		length++;
+		format_length++;
 	}
 	else if(data->show_sign == true)
-		length++;
+		format_length++;
 	if(num == 0)
-		return (length + 1);
+		return (format_length + 1);
 	while(num > 0)
 	{
 		num /= 10;
-		length++;
+		format_length++;
+		num_length++;
 	}
-	return length;
+	if(num_length < data->precision)
+		return data->precision;
+	return format_length;
 }
 
 static void insert_num(t_data *data, long num)
@@ -43,11 +48,11 @@ void i_d_handler(t_data *data, va_list *ap)
 		data->if_positive_space = false;
 	if(data->width_padding == '0' && (data->precision_set == true || data->left_align == true))
 		data->width_padding = ' ';
-	if(num < 0)
-		check_flush_insert(data, '-');
 	num_length = get_num_length(data, (long)num);
 	while(data->left_align == false && (--(width) - num_length) > 0)
 		check_flush_insert(data, data->width_padding);
+	if(num < 0)
+		check_flush_insert(data, '-');
 	if(data->show_sign == true && num >= 0)
 		check_flush_insert(data, '+');
 	if(data->if_positive_space == true && num >= 0)

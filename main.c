@@ -19,8 +19,25 @@ int main(void)
 	printf("----------------------------------------------------\n");
 	*/
 	printf("*** TEST STRING ***\n");
-	ft_printf("ft= %.s \n", "-");
-	printf("p = %.s \n", "-");
+	ft_printf("ft= %.03s \n", NULL);
+	printf("p = %.03s \n", NULL);
+
+	ft_printf("ft= %3.1s \n", NULL);
+	printf("p = %3.1s \n", NULL);
+
+	ft_printf("ft= %9.1s \n", NULL);
+	printf("p = %9.1s \n", NULL);
+
+	ft_printf("ft= %-3.1s \n", NULL);
+	printf("p = %-3.1s \n", NULL);
+
+	ft_printf("ft= %-9.1s \n", NULL);
+	printf("p = %-9.1s \n", NULL);
+
+
+
+
+
 
 	/*
 	ft_printf("String: %  -###+++10.5s  \n", str);
@@ -73,19 +90,19 @@ int main(void)
 	printf("printf:\nUnsigned: %#  ++10.2u\n", u);
 
 	*/
-	/*
 	printf("----------------------------------------------------\n");
 
-	int d;
-
-	d = -14;
 	printf("*** TEST INT ***\n");
-	//ft_printf("ft:\nInt: %d %d %d %d %d %d\n", -10, INT_MAX, d, d, d, d);
-	//printf("pritnf:\nInt: %d %d %d %d %d %d\n", -10, INT_MAX, d, d, d, d);
 
-	ft_printf("ft:\nInt: %04i\n", d);
-	printf("pritnf:\nInt: %04i\n", d);
-	*/
+	ft_printf("ft     Int: %7i\n", -14);
+	printf("pritnf Int: %7i\n", -14);
+
+	ft_printf("ft     Int: %8.5i\n", 34);
+	printf("pritnf Int: %8.5i\n", 34);
+
+	ft_printf("ft     Int: %10.5i\n", -216);
+	printf("printf Int: %10.5i\n", -216);
+
 	return 0;
 }
 
