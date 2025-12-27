@@ -35,7 +35,7 @@ static void insert_num(t_data *data, long num, int num_length)
 	if(num < 0)
 		num *= -1;
 	if(num >= 10)
-		insert_num(data, num / 10);
+		insert_num(data, num / 10, num_length);
 	check_flush_insert(data, (num % 10) + '0');
 }
 
