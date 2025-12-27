@@ -88,21 +88,20 @@ int main(void)
 	printf("printf:\nUnsigned: %#  ++10.2u\n", u);
 
 	*/
-	printf("----------------------------------------------------\n");
 
 	printf("*** TEST INT ***\n");
 
-	ft_printf("ft     Int: %8.5x\n", 0);
-	printf("pritnf Int: %8.5x\n", 0);
+	ft_printf("ft    : %.03s", NULL);
+	printf("printf: %.03s", NULL);
 
-	ft_printf("ft     Int: %-8.5x\n", 0);
-	printf("pritnf Int: %-8.5x\n", 0);
+	ft_printf("ft    : %3.1s\n", NULL);
+	printf("pritnf: %3.1s\n", NULL);
 
-	ft_printf("ft     Int: %08.5x\n", 0);
-	printf("printf Int: %08.5x\n", 0);
+	ft_printf("ft    : %-9.1s\n", NULL);
+	printf("printf: %-9.1s\n", NULL);
 
-	ft_printf("ft     Int: %03.2x\n", 0);
-	printf("pritnf Int: %03.2x\n", 0);
+	ft_printf("ft    : %50.2s\n", NULL);
+	printf("pritnf: %50.2s\n", NULL);
 
 	return 0;
 }

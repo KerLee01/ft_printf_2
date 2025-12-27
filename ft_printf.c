@@ -1,6 +1,6 @@
 #include "ft_printf.h"
 
-bool is_flag(char c, t_data *data)
+static bool is_flag(char c, t_data *data)
 {
 	if(c == ' ')
 		return (data->if_positive_space = true, true);
@@ -15,7 +15,7 @@ bool is_flag(char c, t_data *data)
 	return false;
 }
 
-bool is_specifier(char s)
+static bool is_specifier(char s)
 {
 	if(s == 'c' || s == 's' || s == 'p' || s == 'd' || s == 'i' || s == 'u' ||
 			s == 'x' || s == 'X' || s == '%')
@@ -23,7 +23,7 @@ bool is_specifier(char s)
 	return false;
 }
 
-void set_format_data(t_data *data)
+static void set_format_data(t_data *data)
 {
 	data->if_positive_space = false;
 	data->show_sign = false;
@@ -35,7 +35,7 @@ void set_format_data(t_data *data)
 	data->specifier = 0;
 }
 
-int add_number(const char **format)
+static int add_number(const char **format)
 {
 	int result;
 
@@ -49,7 +49,7 @@ int add_number(const char **format)
 	return result;
 }
 
-void process_format(const char **format, t_data *data)
+static void process_format(const char **format, t_data *data)
 {
 	char *initial_format = (char *)*format;
 
@@ -81,7 +81,7 @@ void check_flush_insert(t_data *data, char c)
 	data->stash[(data->current_byte)++] = c;
 }
 
-void insert_specifier_str(t_data *data, va_list *ap)
+static void insert_specifier_str(t_data *data, va_list *ap)
 {
 	if(data->specifier == 'c')
 		c_handler(data, ap);
@@ -99,7 +99,7 @@ void insert_specifier_str(t_data *data, va_list *ap)
 		check_flush_insert(data, '%');
 }
 
-void fill_stash(const char *format, va_list *ap, t_data *data)
+static void fill_stash(const char *format, va_list *ap, t_data *data)
 {
 	while(*format != '\0')
 	{

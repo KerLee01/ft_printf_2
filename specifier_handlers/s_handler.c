@@ -1,5 +1,5 @@
-#include "ft_printf.h"
-void apply_width(t_data *data, char *s_string, int s_length)
+#include "../ft_printf.h"
+static void apply_width(t_data *data, char *s_string, int s_length)
 {
 	int i;
 
@@ -22,7 +22,7 @@ void apply_width(t_data *data, char *s_string, int s_length)
 	}
 }
 
-void apply_width_precision(t_data *data, char *s_string)
+static void apply_width_precision(t_data *data, char *s_string)
 {
 	int i;
 
