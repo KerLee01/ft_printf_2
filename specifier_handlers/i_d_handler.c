@@ -16,6 +16,8 @@ static int get_num_length(t_data *data, long num)
 	}
 	else if(data->show_sign == true)
 		format_length++;
+	if(num == 0 && data->precision_set == false)
+		return (format_length + 1);
 	while(num > 0)
 	{
 		num /= 10;
