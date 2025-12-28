@@ -53,7 +53,7 @@ void s_handler(t_data *data, va_list *ap)
 	s_string = va_arg(*ap, char *);
 	if(s_string == NULL && data->precision_set == false)
 		s_string = "(null)";
-	else
+	else if(s_string == NULL && data->precision_set == true)
 		s_string = "";
 	s_length = ft_strlen(s_string);
 	i = -1;
