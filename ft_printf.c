@@ -76,6 +76,7 @@ void check_flush_insert(t_data *data, char c)
 	if(data->current_byte == STASH_SIZE)
 	{
 		(void)write(1, data->stash, 4096);
+		data->total_bytes += 4096;
 		data->current_byte = 0;
 	}
 	data->stash[(data->current_byte)++] = c;
@@ -125,7 +126,7 @@ int ft_printf(const char *format, ...)
 	t_data data;
 	int total_written;
 
-	// initialise data
+	// Initialise data
 	set_format_data(&data);
 	data.total_bytes = 0;
 	data.current_byte = 0;
