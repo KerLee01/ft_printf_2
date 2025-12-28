@@ -89,19 +89,31 @@ int main(void)
 
 	*/
 
-	printf("*** TEST INT ***\n");
+	printf("*** TEST STRING ***\n");
 
-	ft_printf("ft    : %.03s", NULL);
-	printf("printf: %.03s", NULL);
+	int byte;
 
-	ft_printf("ft    : %3.1s\n", NULL);
-	printf("pritnf: %3.1s\n", NULL);
+	byte = ft_printf("ft    : %.03s\n", NULL);
+	printf("ft byte: %d\n", byte);
+	byte = printf("printf: %.03s\n", NULL);
+	printf("p byte: %d\n\n", byte);
 
-	ft_printf("ft    : %-9.1s\n", NULL);
-	printf("printf: %-9.1s\n", NULL);
 
-	ft_printf("ft    : %50.2s\n", NULL);
-	printf("pritnf: %50.2s\n", NULL);
+	byte = ft_printf("ft    : %3.1s\n", NULL);
+	printf("ft byte: %d\n", byte);
+	byte = printf("pritnf: %3.1s\n", NULL);
+	printf("p byte: %d\n\n", byte);
+
+	byte = ft_printf("ft    : %-9.1s\n", NULL);
+	printf("ft byte: %d\n", byte);
+	byte = printf("printf: %-9.1s\n", NULL);
+	printf("p byte: %d\n\n", byte);
+
+
+	byte = ft_printf("ft    : %50.2s\n", NULL);
+	printf("ft byte: %d\n", byte);
+	byte = printf("pritnf: %50.2s\n", NULL);
+	printf("p byte: %d\n\n", byte);
 
 	return 0;
 }
