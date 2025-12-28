@@ -51,7 +51,7 @@ void s_handler(t_data *data, va_list *ap)
 	int i;
 
 	s_string = va_arg(*ap, char *);
-	if(s_string == NULL && (data->precision_set == false || (data->precision_set == true && data->precision > 7)))
+	if(s_string == NULL && (data->precision_set == false || data->precision >= 6))
 		s_string = "(null)";
 	else if(s_string == NULL && data->precision_set == true && data->precision < 7)
 		s_string = "";
