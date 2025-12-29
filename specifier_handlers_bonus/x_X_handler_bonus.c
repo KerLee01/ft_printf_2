@@ -51,10 +51,7 @@ void x_X_handler(t_data *data, va_list *ap)
 	if(data->hex_hash == true && hex != 0)
 	{
 		check_flush_insert(data, '0');
-		if(data->specifier == 'X')
-			check_flush_insert(data, 'X');
-		else
-			check_flush_insert(data, 'x');
+		check_flush_insert(data, data->specifier);
 	}
 	precision_pad(data, (long)hex);
 	insert_hex(data, hex, hex_length);

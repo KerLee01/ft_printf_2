@@ -1,47 +1,45 @@
 #include "../ft_printf_bonus.h"
-static void apply_width(t_data *data, char *s_string, int s_length)
+
+static int ft_strlen(char *str)
 {
 	int i;
 
 	i = 0;
-	while(data->left_align == false && data->width - s_length > 0)
-	{
-		check_flush_insert(data, ' ');
-		(data->width)--;
-	}
-	while(s_string[i] != '\0')
-	{
-		check_flush_insert(data, s_string[i]);
+	if(!str)
+		return (0);
+	while(str[i] != '\0')
 		i++;
-	}
-	
-	while(data->left_align == true && data->width - s_length > 0)
-	{
+	return i;
+}
+
+static void apply_width(t_data *data, char *s_string, int s_length)
+{
+	int i;
+	int width;
+
+	i = -1;
+	width = data->width + 1;
+	while(data->left_align == false && --width - s_length > 0)
 		check_flush_insert(data, ' ');
-		(data->width)--;
-	}
+	while(s_string[++i] != '\0')
+		check_flush_insert(data, s_string[i]);
+	while(data->left_align == true && --width - s_length > 0)
+		check_flush_insert(data, ' ');
 }
 
 static void apply_width_precision(t_data *data, char *s_string)
 {
 	int i;
+	int width;
 
 	i = 0;
-	while(data->left_align == false && data->width - data->precision > 0)
-	{
+	width = data->width + 1;
+	while(data->left_align == false && --width - data->precision > 0)
 		check_flush_insert(data, ' ');
-		(data->width)--;
-	}
-	while(i < data->precision)
-	{
+	while(++i < data->precision)
 		check_flush_insert(data, s_string[i]);
-		i++;
-	}
-	while(data->left_align == true && data->width - data->precision > 0)
-	{
+	while(data->left_align == true && --width - data->precision > 0)
 		check_flush_insert(data, ' ');
-		(data->width)--;
-	}
 }
 
 void s_handler(t_data *data, va_list *ap)
