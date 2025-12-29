@@ -137,6 +137,7 @@ int ft_printf(const char *format, ...)
 	set_format_data(&data);
 	data.total_bytes = 0;
 	data.current_byte = 0;
+	data.write_failed = false;
 
 	fill_stash(format, &ap, &data);
 	va_end(ap);
