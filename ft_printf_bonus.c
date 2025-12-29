@@ -1,4 +1,4 @@
-#include "ft_printf.h"
+#include "ft_printf_bonus.h"
 
 static bool is_flag(char c, t_data *data)
 {
@@ -137,13 +137,14 @@ int ft_printf(const char *format, ...)
 	set_format_data(&data);
 	data.total_bytes = 0;
 	data.current_byte = 0;
+	data.write_failed = false;
 
 	fill_stash(format, &ap, &data);
-	va_end(ap);
 	bytes_written = write(1, data.stash, data.current_byte);
 	data.total_bytes += data.current_byte;
 	if(bytes_written != data.current_byte || data.write_failed == true || data.total_bytes > INT_MAX)
 		return (-1);
 	total_written = data.total_bytes;
+	va_end(ap);
 	return (total_written);
 }
