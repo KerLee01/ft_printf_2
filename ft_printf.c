@@ -145,5 +145,6 @@ int ft_printf(const char *format, ...)
 	if(bytes_written != data.current_byte || data.write_failed == true || data.total_bytes > INT_MAX)
 		return (-1);
 	total_written = data.total_bytes;
+	va_end(ap);
 	return (total_written);
 }
