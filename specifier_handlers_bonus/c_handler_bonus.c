@@ -1,18 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   c_handler_bonus.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kerlee <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/15 17:46:43 by kerlee            #+#    #+#             */
+/*   Updated: 2026/01/15 17:46:47 by kerlee           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../ft_printf_bonus.h"
 
-void c_handler(t_data *data, va_list *ap)
+void	c_handler(t_data *data, va_list *ap)
 {
-	char c;
-	int width;
+	char	c;
+	int		width;
 
 	c = va_arg(*ap, int);
 	width = data->width + 1;
-	if(width - 1 > 1)
+	if (width - 1 > 1)
 	{
-		while(data->left_align == false && --(width) > 1)
+		while (data->left_align == false && --(width) > 1)
 			check_flush_insert(data, ' ');
-		check_flush_insert(data,  c);
-		while(data->left_align == true && --(width) > 1)
+		check_flush_insert(data, c);
+		while (data->left_align == true && --(width) > 1)
 			check_flush_insert(data, ' ');
 	}
 	else

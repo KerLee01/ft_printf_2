@@ -9,6 +9,7 @@ H_DIR = specifier_handlers/
 B_H_DIR = specifier_handlers_bonus/
 
 SRCS = ft_printf.c\
+       ft_printf_utils.c\
        $(H_DIR)specifier_utils.c \
        $(H_DIR)c_handler.c \
        $(H_DIR)s_handler.c \
@@ -18,6 +19,7 @@ SRCS = ft_printf.c\
        $(H_DIR)x_X_handler.c
 
 BONUS_SRCS =  ft_printf_bonus.c\
+	      ft_printf_utils_bonus.c\
 	      $(B_H_DIR)specifier_utils_bonus.c \
 	      $(B_H_DIR)c_handler_bonus.c \
 	      $(B_H_DIR)s_handler_bonus.c \
@@ -43,7 +45,7 @@ bonus: $(BONUS_OBJS)
 	@echo "Bonus library updated!"
 
 clean: 
-	$(RM) $(OBJS)
+	$(RM) $(OBJS) $(BONUS_OBJS)
 
 fclean : clean
 	$(RM) $(NAME)

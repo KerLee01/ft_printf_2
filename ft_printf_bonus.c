@@ -1,68 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf_bonus.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kerlee <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/15 17:44:08 by kerlee            #+#    #+#             */
+/*   Updated: 2026/01/18 18:00:08 by kerlee           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf_bonus.h"
 
-static bool is_flag(char c, t_data *data)
+static void	process_format(const char **format, t_data *data)
 {
-	if(c == ' ')
-		return (data->if_positive_space = true, true);
-	if(c == '+')
-		return (data->show_sign = true, true);
-	if(c == '#')
-		return (data->hex_hash = true, true);
-	if(c == '-')
-		return (data->left_align = true, true);
-	if(c == '0')
-		return(data->width_padding = '0', true);
-	return false;
-}
+	char	*initial_format;
 
-static bool is_specifier(char s)
-{
-	if(s == 'c' || s == 's' || s == 'p' || s == 'd' || s == 'i' || s == 'u' ||
-			s == 'x' || s == 'X' || s == '%')
-		return true;
-	return false;
-}
-
-static void set_format_data(t_data *data)
-{
-	data->if_positive_space = false;
-	data->show_sign = false;
-	data->hex_hash = false;
-	data->left_align = false;
-	data->precision_set = false;
-	data->width_padding = ' ';
-	data->precision = 0;
-	data->specifier = 0;
-}
-
-static int add_number(const char **format)
-{
-	int result;
-
-	result = 0;
-	while(**format >= '0' && **format <= '9')
-	{
-		result *= 10;
-		result += (**format - '0');
-		(*format)++;
-	}
-	return result;
-}
-
-static void process_format(const char **format, t_data *data)
-{
-	char *initial_format = (char *)*format;
-
-	while(is_flag(**format, data) == true)
+	initial_format = (char *)*format;
+	while (is_flag(**format, data) == true)
 		(*format)++;
 	data->width = add_number(format);
-	if(**format == '.')
+	if (**format == '.')
 	{
 		data->precision_set = true;
 		(*format)++;
 		data->precision = add_number(format);
 	}
-	if(is_specifier(**format) == true)
+	if (is_specifier(**format) == true)
 	{
 		data->specifier = **format;
 		(*format)++;
@@ -71,47 +35,47 @@ static void process_format(const char **format, t_data *data)
 		*format = initial_format;
 }
 
-void check_flush_insert(t_data *data, char c)
+void	check_flush_insert(t_data *data, char c)
 {
-	int bytes_written;
+	int	bytes_written;
 
-	if(data->current_byte == STASH_SIZE)
+	if (data->current_byte == STASH_SIZE)
 	{
-		bytes_written = write(1, data->stash, 4096);
-		data->total_bytes += 4096;
-		if(bytes_written != 4096 || data->total_bytes > INT_MAX)
+		bytes_written = write(1, data->stash, STASH_SIZE);
+		data->total_bytes += STASH_SIZE;
+		if (bytes_written != STASH_SIZE || data->total_bytes > INT_MAX)
 		{
 			data->write_failed = true;
-			return;
+			return ;
 		}
 		data->current_byte = 0;
 	}
 	data->stash[(data->current_byte)++] = c;
 }
 
-static void insert_specifier_str(t_data *data, va_list *ap)
+static void	insert_specifier_str(t_data *data, va_list *ap)
 {
-	if(data->specifier == 'c')
+	if (data->specifier == 'c')
 		c_handler(data, ap);
-	else if(data->specifier == 's')
+	else if (data->specifier == 's')
 		s_handler(data, ap);
-	else if(data->specifier == 'p')
+	else if (data->specifier == 'p')
 		p_handler(data, ap);
-	else if(data->specifier == 'x' || data->specifier == 'X')
-		x_X_handler(data,ap);
-	else if(data->specifier == 'u')
+	else if (data->specifier == 'x' || data->specifier == 'X')
+		x_handler(data, ap);
+	else if (data->specifier == 'u')
 		u_handler(data, ap);
-	else if(data->specifier == 'i' || data->specifier == 'd')
+	else if (data->specifier == 'i' || data->specifier == 'd')
 		i_d_handler(data, ap);
-	else if(data->specifier == '%')
+	else if (data->specifier == '%')
 		check_flush_insert(data, '%');
 }
 
-static void fill_stash(const char *format, va_list *ap, t_data *data)
+static void	fill_stash(const char *format, va_list *ap, t_data *data)
 {
-	while(*format != '\0' && data->write_failed == false)
+	while (*format != '\0' && data->write_failed == false)
 	{
-		if(*format == '%')
+		if (*format == '%')
 		{
 			format++;
 			set_format_data(data);
@@ -126,23 +90,25 @@ static void fill_stash(const char *format, va_list *ap, t_data *data)
 	}
 }
 
-int ft_printf(const char *format, ...)
+int	ft_printf(const char *format, ...)
 {
-	va_list ap;
-	va_start(ap, format);
-	t_data data;
-	int total_written;
-	int bytes_written;
+	va_list	ap;
+	t_data	data;
+	int		total_written;
+	int		bytes_written;
 
+	if (!format)
+		return (-1);
+	va_start(ap, format);
 	set_format_data(&data);
 	data.total_bytes = 0;
 	data.current_byte = 0;
 	data.write_failed = false;
-
 	fill_stash(format, &ap, &data);
 	bytes_written = write(1, data.stash, data.current_byte);
 	data.total_bytes += data.current_byte;
-	if(bytes_written != data.current_byte || data.write_failed == true || data.total_bytes > INT_MAX)
+	if (bytes_written != data.current_byte || data.write_failed == true
+		|| data.total_bytes > INT_MAX)
 		return (-1);
 	total_written = data.total_bytes;
 	va_end(ap);
